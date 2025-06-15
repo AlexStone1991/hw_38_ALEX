@@ -1,31 +1,27 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
-</head>
-<body>
-    <h1>Добро пожаловать в наш барбершоп!</h1>
-    <nav>
-        <ul>
-            <li><a href="{% url 'orders_list' %}">Список заявок</a></li>
-            <li><a href="{% url 'thanks' %}">Спасибо за заявку</a></li>
-        </ul>
-    </nav>
-    <h2>Наши мастера</h2>
-    <ul>
-        {% for master in masters %}
-        <li>{{ master.name }}</li>
-        {% endfor %}
-    </ul>
-    <h2>Наши услуги</h2>
-    <ul>
-        {% for service in services %}
-        <li>{{ service }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <h1>Добро пожаловать в наш барбершоп ALEXXX!</h1>
+<h2>Наши мастера</h2>
+<ul>
+    {% for master in masters %}
+    <li><strong>{{ master.name }}</strong></li>
+    {% endfor %}
+</ul>
+<h2>Наши услуги</h2>
+<ul>
+    {% for service in services_with_masters %}
+    <li>
+        {{ service.name }}
+        {% if service.masters %}
+            - Мастер:
+            {% for master in service.masters %}
+                <strong>{{ master.name }}</strong>{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

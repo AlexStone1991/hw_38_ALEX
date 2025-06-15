@@ -6,11 +6,25 @@ def landing(request):
     """
     Отвечает за маршрут '/'
     """
-    сontext = {
-        "masters": masters,
-        "services": services,
+    # Создаем структуру данных для услуг и мастеров
+    services_with_masters = [
+        {"name": "Стрижка под 'Горшок'", "masters": [masters[0]]},
+        {"name": "Укладка 'Взрыв на макаронной фабрике'", "masters": [masters[1]]},
+        {"name": "Королевское бритье опасной бритвой", "masters": [masters[2]]},
+        {"name": "Окрашивание 'Жизнь в розовом цвете'", "masters": [masters[3]]},
+        {"name": "Мытье головы 'Душ впечатлений'", "masters": [masters[4]]},
+        {"name": "Стрижка бороды 'Боярин'", "masters": [masters[0], masters[2]]},
+        {"name": "Массаж головы 'Озарение'", "masters": [masters[1], masters[3]]},
+        {"name": "Укладка 'Ветер в голове'", "masters": [masters[4]]},
+        {"name": "Плетение косичек 'Викинг'", "masters": [masters[0], masters[3]]},
+        {"name": "Полировка лысины до блеска", "masters": [masters[2]]},
+    ]
+
+    context = {
+        'masters': masters,
+        'services_with_masters': services_with_masters,
     }
-    return render(request, 'landing.html', сontext)
+    return render(request, 'landing.html', context)
 
 def thanks(request):
     """

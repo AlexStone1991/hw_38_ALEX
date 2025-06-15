@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Barbershop{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'landing' %}">Главная</a></li>
+            <li><a href="{% url 'orders_list' %}">Список заявок</a></li>
+            <li><a href="{% url 'thanks' %}">Спасибо за заявку</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
