@@ -6,7 +6,11 @@ def landing(request):
     """
     Отвечает за маршрут '/'
     """
-    return  HttpResponse('<h1>Главная страница</h1>')
+    сontext = {
+        "masters": masters,
+        "services": services,
+    }
+    return render(request, 'landing.html', сontext)
 
 def thanks(request):
     """
@@ -18,7 +22,10 @@ def orders_list(request):
     """
     Отвечает за маршрут /orders/'
     """
-    return HttpResponse('<h1>Список заказов</h1>')
+    context = {
+        "orders": orders,
+    }
+    return render(request, 'orders_list.html', context=context)
 
 def order_details(request, order_id):
     """
@@ -26,15 +33,13 @@ def order_details(request, order_id):
     :param request: HttpRequest
     :param order_id: int (номер заказа)
     """
-    order = [order for order in orders if order['id'] == order_id]
-    try:
-        order = order[0]
-        context = {
-            "order": order,
-            "my_fariable": "Hello, world",
-        }
-    except IndexError:
-        return HttpResponse(f'<h1>Заказ {order_id} не найден</h1>')
-    else:
-        
-        return render(request, 'order_details.html', context=context)
+    order = next((order for order in orders if order['id'] == order_id), None) 
+    # Использует next для поиска заказа по order_id, что делает код более читаемым.
+    if order is None:
+        return render (request, "order_not_found.html", {"order_id": order_id}, status=404)
+    
+    context = {
+        "order": order,
+    }
+
+    return render(request, 'order_details.html', context=context)

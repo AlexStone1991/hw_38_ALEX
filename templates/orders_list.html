@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список заявок</title>
+</head>
+<body>
+    <h1>Список заявок</h1>
+    <ul>
+        {% for order in orders %}
+        <li>
+            <a href="{% url 'order_details' order.id %}">
+                Заказ №{{ order.id }} - Клиент: {{ order.client_name }} - Статус: {{ order.status }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
