@@ -1,0 +1,9 @@
+.venv/
+
+poetry.lock
+pyproject.toml
+.hw_38/
+.env
+hw_38/PYTHON413 HW №38.md
+db.sqlite3
+*__pycache__
