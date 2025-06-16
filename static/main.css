@@ -13,7 +13,7 @@ body {
 }
 
 h1, h2 {
-    color: #333;
+    color: #b08383;
 }
 
 ul {
@@ -24,5 +24,5 @@ ul {
 li {
     margin: 10px 0;
     padding: 10px;
-    background: #f4f4f4;
+    background: #ff6c6c;
 }
