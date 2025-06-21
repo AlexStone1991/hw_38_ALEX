@@ -41,7 +41,7 @@ def orders_list(request):
     }
     return render(request, 'orders_list.html', context=context)
 
-def order_details(request, order_id):
+def order_detail(request, order_id):
     """
     Отвечает за маршрут /orders/<int:order_id>/
     :param request: HttpRequest
@@ -56,4 +56,4 @@ def order_details(request, order_id):
         "order": order,
     }
 
-    return render(request, 'order_details.html', context=context)
+    return render(request, 'order_detail.html', context=context)
