@@ -1,16 +1,9 @@
-{% extends 'base.html' %}
-
-{% block title %}Список заявок{% endblock %}
-
+{% extends "base.html" %}
 {% block content %}
     <h1>Список заявок</h1>
-    <ul>
+    <div class="flex-container">
         {% for order in orders %}
-        <li>
-            <a href="{% url 'order_details' order.id %}">
-                Заказ №{{ order.id }} - Клиент: {{ order.client_name }} - Статус: {{ order.status }}
-            </a>
-        </li>
+        {% include "order_detail.html" %}
         {% endfor %}
-    </ul>
-{% endblock %}
+    </div>
+{% endblock content %}

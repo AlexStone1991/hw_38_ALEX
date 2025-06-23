@@ -1,0 +1,105 @@
+body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .flex-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            transition: transform 0.3s ease;
+        }
+
+        .flex-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .flex-card h2 {
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .flex-card p {
+            margin: 10px 0;
+        }
+
+        .services {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 15px;
+        }
+
+        .service {
+            background-color: #e0f7fa;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        /* Стили для статусов */
+        .new {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .confirmed {
+            color: #2980b9;
+            font-weight: bold;
+        }
+
+        .rejected {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .canceled {
+            color: #95a5a6;
+            font-weight: bold;
+        }
+        /* Стили для секций */
+.section {
+    text-align: center;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для изображений */
+.section img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Стили для навигационных ссылок */
+.nav-link {
+    transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: #e9ecef;
+    border-radius: 5px;
+}
