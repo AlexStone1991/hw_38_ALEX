@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Услуги{% endblock %}
+
+{% block content %}
+    <h1>Наши услуги</h1>
+    <ul>
+        {% for service in services_with_masters %}
+        <li>
+            {{ service.name }}
+            {% if service.masters %}
+                - Мастера:
+                {% for master in service.masters %}
+                    <strong>{{ master.name }}</strong>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            {% endif %}
+        </li>
+        {% endfor %}
+        <a href="{% url 'landing' %}" class="btn btn-primary">Вернуться на главную</a>
+    </ul>
+{% endblock %}

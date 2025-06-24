@@ -3,120 +3,49 @@
 
 {% block title %}Барбершоп "ALEXXX"{% endblock %}
 
-{% block styles %}
-<link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
-<style>
-    /* Дополнительные стили, если необходимо */
-    .section {
-        text-align: center;
-        padding: 20px;
-        margin: 20px auto;
-        max-width: 800px;
-    }
-
-    .section img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 10px;
-    }
-</style>
-{% endblock %}
-
 {% block content %}
-    <h1>Добро пожаловать в Барбершоп "ALEXXX"!</h1>
+    <h1 class="text-center my-4">Добро пожаловать в Барбершоп "ALEXXX"!</h1>
 
-    <!-- Секция "О нас" -->
-    <section id="about" class="section">
-        <h2>О нас</h2>
-        <img src="{% static 'images/about.jpg' %}" alt="О нас">
-        <p>Здесь вы можете написать информацию о вашем барбершопе, его истории, миссии и ценностях.</p>
-    </section>
+    <!-- Основное содержимое главной страницы -->
+    <div class="container">
+        <p class="text-center">Добро пожаловать на официальный сайт нашего барбершопа. Мы предлагаем широкий спектр услуг для вашего комфорта и стиля.</p>
+    </div>
 
-    <!-- Секция "Услуги" -->
-    <section id="services" class="section">
-        <h2>Наши услуги</h2>
-        <img src="{% static 'images/services.jpg' %}" alt="Услуги">
-        <ul>
-            {% for service in services_with_masters %}
-            <li>
-                {{ service.name }}
-                {% if service.masters %}
-                    - Мастера:
-                    {% for master in service.masters %}
-                        <strong>{{ master.name }}</strong>{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                {% endif %}
-            </li>
-            {% endfor %}
-        </ul>
-    </section>
-
-    <!-- Секция "Мастера" -->
-    <section id="masters" class="section">
-        <h2>Наши мастера</h2>
-        <img src="{% static 'images/masters.jpg' %}" alt="Мастера">
-        <ul>
-            {% for master in masters %}
-            <li><strong>{{ master.name }}</strong></li>
-            {% endfor %}
-        </ul>
-    </section>
-
-    <!-- Секция "Запись" -->
-    <section id="appointment" class="section">
-        <h2>Запись</h2>
-        <img src="{% static 'images/appointment.jpg' %}" alt="Запись">
-        <p>Здесь вы можете написать информацию о том, как можно записаться на услуги в вашем барбершопе.</p>
-    </section>
+    <!-- Блоки для навигации по основным разделам -->
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-md-3">
+                <a href="{% url 'about' %}" class="nav-block">
+                    <div class="nav-block-content p-3 bg-light rounded shadow-sm">
+                        <h3>О нас</h3>
+                        <p>Узнайте больше о нашем барбершопе и нашей команде.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{% url 'services' %}" class="nav-block">
+                    <div class="nav-block-content p-3 bg-light rounded shadow-sm">
+                        <h3>Услуги</h3>
+                        <p>Посмотрите, какие услуги мы предлагаем.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{% url 'masters' %}" class="nav-block">
+                    <div class="nav-block-content p-3 bg-light rounded shadow-sm">
+                        <h3>Мастера</h3>
+                        <p>Познакомьтесь с нашими мастерами.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{% url 'appointment' %}" class="nav-block">
+                    <div class="nav-block-content p-3 bg-light rounded shadow-sm">
+                        <h3>Запись</h3>
+                        <p>Запишитесь на услугу онлайн.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{% comment %} {% block title %}Барбершоп "ALEXXX"{% endblock %}
-
-{% block content %}
-    <h1>Добро пожаловать в Барбершоп "ALEXXX"!</h1>
-<h2>Наши мастера</h2>
-<ul>
-    {% for master in masters %}
-    <li><strong>{{ master.name }}</strong></li>
-    {% endfor %}
-</ul>
-<h2>Наши услуги</h2>
-<ul>
-    {% for service in services_with_masters %}
-    <li>
-        {{ service.name }}
-        {% if service.masters %}
-            - Мастер:
-            {% for master in service.masters %}
-                <strong>{{ master.name }}</strong>{% if not forloop.last %}, {% endif %}
-            {% endfor %}
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
-{% endblock %} {% endcomment %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Мастера{% endblock %}
+
+{% block content %}
+    <h1>Наши мастера</h1>
+    <ul class="list-unstyled text-center">
+        {% for master in masters %}
+        <li><strong>{{ master.name }}</strong></li>
+        {% endfor %}
+        <a href="{% url 'landing' %}" class="btn btn-primary">Вернуться на главную</a>
+    </ul>
+    
+{% endblock %}
