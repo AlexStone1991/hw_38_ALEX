@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Список заявок</h1>
-    <div class="flex-container">
-        {% for order in orders %}
-        {% include "order_detail.html" %}
-        {% endfor %}
-    </div>
+    {% if user.is_staff %}
+        <h1>Список заявок</h1>
+        <div class="flex-container">
+            {% for order in orders %}
+                {% include "order_detail.html" with order=order %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>У вас нет прав для просмотра списка заявок.</p>
+    {% endif %}
 {% endblock content %}

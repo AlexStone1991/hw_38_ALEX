@@ -6,6 +6,19 @@
     <div class="container">
         <h1>Спасибо за заявку!</h1>
         <p>Мы свяжемся с вами в ближайшее время!</p>
+        <p id="countdown">Вы будете перенаправлены на главную страницу через <span id="time">5</span> секунд.</p>
         <a href="{% url 'landing' %}" class="btn btn-primary">Вернуться на главную</a>
     </div>
+
+    <script>
+        let time = 5;
+        const countdown = setInterval(function() {
+            time--;
+            document.getElementById('time').textContent = time;
+            if (time <= 0) {
+                clearInterval(countdown);
+                window.location.href = "{% url 'landing' %}";
+            }
+        }, 1000);
+    </script>
 {% endblock %}
