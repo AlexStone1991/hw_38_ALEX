@@ -17,3 +17,6 @@ urlpatterns = [
     path('appointment/', appointment, name='appointment'),
     path("accounts/", include("django.contrib.auth.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
