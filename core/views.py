@@ -3,6 +3,7 @@ from .data import orders, services, masters
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import redirect
+from core.context_processors import menu_items
 
 
 def about(request):

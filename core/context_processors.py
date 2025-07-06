@@ -1,7 +1,9 @@
-from .models import MenuItem
+from .models import Service, Master
 
 def menu_items(request):
-    # Пример: получение элементов меню из базы данных
-    items = MenuItem.objects.all()
-    return {'menu_items': items}
-
+    services = Service.objects.all()
+    masters = Master.objects.all()
+    return {
+        'services': services,
+        'masters': masters,
+    }
