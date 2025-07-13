@@ -60,5 +60,27 @@
             </a>
         </div>
     </div>
+
+<!-- Прогресс-бар статуса заказа -->
+<div class="progress mb-4" style="height: 20px;">
+  <div class="progress-bar 
+    {% if order.status == 'new' %}bg-warning
+    {% elif order.status == 'confirmed' %}bg-info
+    {% elif order.status == 'completed' %}bg-success
+    {% else %}bg-danger{% endif %}" 
+    style="width: 
+    {% if order.status == 'new' %}25%
+    {% elif order.status == 'confirmed' %}50%
+    {% elif order.status == 'completed' %}100%
+    {% else %}100%{% endif %}">
+    {{ order.get_status_display }}
+  </div>
+</div>
+
+<!-- Иконку Duff Beer для настроения -->
+<div class="text-center mt-3">
+  <img src="{% static 'images/duff-beer-icon.png' %}" width="50" alt="Duff Beer" 
+       class="opacity-25 hover-opacity-100" style="transition: opacity 0.3s;">
+</div>
 </div>
 {% endblock %}

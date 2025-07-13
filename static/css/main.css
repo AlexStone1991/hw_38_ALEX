@@ -192,3 +192,10 @@ h1, h2, h3, h4 {
     color: #FF9800;
     transform: scale(1.2);
 }
+html {
+    scroll-behavior: smooth;
+}
+
+section {
+    scroll-margin-top: 80px; 
+}

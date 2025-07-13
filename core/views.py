@@ -61,3 +61,8 @@ def order_detail(request, order_id):
     context = {"order": order}
 
     return render(request, "order_detail.html", context=context)
+
+def services_list(request):
+    services = Service.objects.all()
+    context = {"services": services}
+    return render(request, "services.html", context=context)

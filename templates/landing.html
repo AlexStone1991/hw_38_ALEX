@@ -24,8 +24,7 @@
         </div>
     </section>
 <div class="container my-5">
-    <!-- Секция мастеров (строго по ТЗ) -->
-    <section class="mb-5">
+    <section id="masters-section" class="mb-5 py-3">
         <h2 class="text-center mb-4">Наши мастера</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for master in masters %}
@@ -46,9 +45,7 @@
             {% endfor %}
         </div>
     </section>
-
-    <!-- Секция отзывов (строго по ТЗ) -->
-    <section>
+    <section id="reviews-section" class="py-3">
         <h2 class="text-center mb-4">Отзывы о нас</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for review in reviews %}

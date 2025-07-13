@@ -11,13 +11,13 @@
             <a href="{% url 'about' %}" class="nav-block">
                 <div class="nav-block-content"><i class="bi bi-info-circle"></i> О нас</div>
             </a>
-            <a href="{% url 'landing' %}#services" class="nav-block">
+            <a href="{% url 'services' %}" class="nav-block">
                 <div class="nav-block-content"><i class="bi bi-scissors"></i> Услуги</div>
             </a>
-            <a href="{% url 'landing' %}#masters" class="nav-block">
+            <a href="{% url 'landing' %}#masters-section" class="nav-block">
                 <div class="nav-block-content"><i class="bi bi-person-badge"></i> Мастера</div>
             </a>
-            <a href="{% url 'landing' %}#reviews" class="nav-block">
+            <a href="{% url 'landing' %}#reviews-section" class="nav-block">
                 <div class="nav-block-content"><i class="bi bi-chat-left-text"></i> Отзывы</div>
             </a>
             {% if user.is_staff %}
