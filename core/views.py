@@ -13,8 +13,11 @@ def about(request):
 
 def landing(request):
 # главная страница
+    masters = Master.objects.filter(is_active=True).prefetch_related('services')[:6]
+    reviews = Review.objects.filter(is_published=True).select_related('master')[:6]
     context = {
-        'Master': Master,
+        'masters': masters,
+        'reviews': reviews,
     }
     return render(request, 'landing.html', context)
 
@@ -24,11 +27,9 @@ def thanks(request):
 
 @login_required # Декоратор проверяет, что пользователь авторизован
 def orders_list(request):
-    if not request.user.is_authenticated:
-        messages.error(request, 'Для просмотра заказов необходимо авторизоваться')
-        return redirect('landing')
+    orders = Order.objects.prefetch_related("services").all()
     context = {
-        "Order": Order,
+        "orders": orders
     }
     return render(request, 'orders_list.html', context=context)
 

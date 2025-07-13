@@ -11,6 +11,10 @@ class Service(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = "Услуга"
+        verbose_name_plural = "Услуги"
 
 class Master(models.Model):
     name = models.CharField(max_length=150, verbose_name="Имя")
@@ -23,6 +27,10 @@ class Master(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = "Мастер"
+        verbose_name_plural = "Мастера"
 
 class Order(models.Model):
     STATUS_CHOICES = (
@@ -44,6 +52,10 @@ class Order(models.Model):
     def __str__(self):
         return f"Заказ {self.id} - {self.client_name}"
     
+    class Meta:
+        verbose_name = "Заказ"
+        verbose_name_plural = "Заказы"
+    
 class Review(models.Model):
     RATING_CHOICES = (
         (1, '1 - Ужасно'),
@@ -62,3 +74,7 @@ class Review(models.Model):
     
     def __str__(self):
         return f"Отзыв {self.id} - {self.client_name}"
+    class Meta:
+        verbose_name = "Отзыв"
+        verbose_name_plural = "Отзывы"
+        ordering = ['-created_at']

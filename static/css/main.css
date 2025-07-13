@@ -71,3 +71,104 @@ h1, h2, h3, h4 {
 .badge.canceled {
     background-color: var(--red) !important;
 }
+/* Стили для карточек заявок */
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.flex-card {
+    background: #FFD90F; /* Желтый как в Симпсонах */
+    border: 3px solid #1D6FC4; /* Синий как Duff Beer */
+    border-radius: 15px;
+    padding: 20px;
+    width: 320px;
+    box-shadow: 5px 5px 0 rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.flex-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 8px 8px 0 rgba(0,0,0,0.15);
+}
+
+.flex-card h2 {
+    color: #1D6FC4;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    border-bottom: 2px dashed #1D6FC4;
+    padding-bottom: 10px;
+}
+
+.flex-card p {
+    margin: 8px 0;
+    color: #333;
+}
+
+.services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.badge {
+    font-size: 0.85rem;
+    padding: 5px 10px;
+    border-radius: 50px;
+}
+
+/* Цвета статусов */
+.bg-new {
+    background-color: #FF9800 !important; /* Оранжевый для новых */
+    color: white;
+}
+
+.bg-confirmed {
+    background-color: #2196F3 !important; /* Синий для подтвержденных */
+    color: white;
+}
+
+.bg-completed {
+    background-color: #4CAF50 !important; /* Зеленый для завершенных */
+    color: white;
+}
+
+.bg-canceled {
+    background-color: #F44336 !important; /* Красный для отмененных */
+    color: white;
+}
+
+/* Кнопка подробнее */
+.btn-outline-primary {
+    border-color: #1D6FC4;
+    color: #1D6FC4;
+    transition: all 0.3s;
+}
+
+.btn-outline-primary:hover {
+    background: #1D6FC4;
+    color: white;
+}
+
+/* Декоративные элементы в стиле Симпсонов */
+.flex-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background: url('/static/images/duff-beer-icon.png') no-repeat;
+    background-size: contain;
+    opacity: 0.1;
+}
+
+.bg-new::before { content: "🆕 "; }
+.bg-confirmed::before { content: "✅ "; }
+.bg-completed::before { content: "✔️ "; }
+.bg-canceled::before { content: "❌ "; }
