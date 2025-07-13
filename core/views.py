@@ -1,5 +1,5 @@
 # from .data import orders, services, masters
-from .models import Order, Master, Service
+from .models import Order, Master, Service, Review
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from core.context_processors import menu_items
@@ -27,9 +27,25 @@ def thanks(request):
 
 @login_required # Декоратор проверяет, что пользователь авторизован
 def orders_list(request):
-    orders = Order.objects.prefetch_related("services").all()
+    search_query = request.GET.get('q', '')
+    search_fields = request.GET.getlist("search_fields", ["client_name"])
+    orders = Order.objects.prefetch_related("services").order_by("-date_created")
+
+    if search_query:
+        q_objects = Q()
+        if "client_name" in search_fields:
+            q_objects |= Q(client_name__icontains=search_query)
+        if "phone" in search_fields:
+            q_objects |= Q(phone__icontains=search_query)
+        if "comment" in search_fields:
+            q_objects |= Q(comment__icontains=search_query)
+
+        orders = orders.filter(q_objects)
+
     context = {
-        "orders": orders
+        "orders": orders,
+        "search_query": search_query,
+        "search_fields": search_fields,
     }
     return render(request, 'orders_list.html', context=context)
 

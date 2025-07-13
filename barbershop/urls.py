@@ -1,5 +1,6 @@
 # barbershop\urls.py
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
@@ -10,8 +11,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', landing, name='landing'),
     path('thanks/', thanks, name='thanks'),
-    path('orders/', orders_list, name='orders'),
-    path('orders/<int:order_id>/', order_detail, name='order_detail'),
+    path('orders/', login_required(orders_list), name='orders'),
+    path('orders/<int:order_id>/', login_required(order_detail), name='order_detail'),
     path('about/', about, name='about'),
 ] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
 
