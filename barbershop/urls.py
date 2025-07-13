@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from debug_toolbar.toolbar import debug_toolbar_urls
-from core.views import landing, thanks, orders_list, order_detail, about, services_list
+from core.views import landing, thanks, orders_list, order_detail, about, services_list, create_order
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -15,6 +15,7 @@ urlpatterns = [
     path('orders/<int:order_id>/', login_required(order_detail), name='order_detail'),
     path('about/', about, name='about'),
     path("services/", services_list, name="services"),
+    path('order/create/<int:service_id>/', create_order, name='create_order'),
 ] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
 
 if settings.DEBUG:

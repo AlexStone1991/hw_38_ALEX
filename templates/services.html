@@ -17,7 +17,7 @@
                     <p class="card-text">{{ service.description|default:"Описание услуги" }}</p>
                 </div>
                 <div class="card-footer bg-transparent border-warning">
-                    <a href="{% url 'landing' %}#get-order" class="btn btn-warning btn-sm mt-2">
+                    <a href="{% url 'create_order' service.id %}" class="btn btn-warning btn-sm mt-2">
                         <i class="bi bi-calendar-plus"></i> Записаться
                     </a>
                     <div class="d-flex justify-content-between align-items-center">

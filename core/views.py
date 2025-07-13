@@ -6,6 +6,8 @@ from core.context_processors import menu_items
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
 from django.db.models import Q, Count, Sum
+from django.shortcuts import get_object_or_404
+from .forms import OrderForm
 
 def about(request):
     # Здесь можно добавить логику для страницы "О нас"
@@ -13,7 +15,7 @@ def about(request):
 
 def landing(request):
 # главная страница
-    masters = Master.objects.filter(is_active=True).prefetch_related('services')[:6]
+    masters = Master.objects.filter(is_active=True).prefetch_related('services')
     reviews = Review.objects.filter(is_published=True).select_related('master')[:6]
     context = {
         'masters': masters,
@@ -66,3 +68,21 @@ def services_list(request):
     services = Service.objects.all()
     context = {"services": services}
     return render(request, "services.html", context=context)
+
+def create_order(request, service_id):
+    service = get_object_or_404(Service, id=service_id)
+    
+    if request.method == "POST":
+        form = OrderForm(request.POST, service=service)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.save()
+            order.services.add(service)
+            return redirect("thanks")
+    else:
+        form = OrderForm(initial={'service': service}, service=service)
+    
+    return render(request, "create_order.html", 
+        {"form": form,
+        "service": service
+        })

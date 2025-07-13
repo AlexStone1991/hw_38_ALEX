@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h2>Запись на услугу: {{ service.name }}</h2>
+    <div class="card mt-4">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-warning">
+                    <i class="bi bi-calendar-plus"></i> Подтвердить запись
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
