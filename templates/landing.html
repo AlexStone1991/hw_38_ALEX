@@ -1,51 +1,57 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Барбершоп "ALEXXX"{% endblock %}
+{% block title %}Барбершоп "Moe's Tavern"{% endblock %}
 
 {% block content %}
-    <h1 class="text-center my-4">Добро пожаловать в Барбершоп "ALEXXX"!</h1>
+<div class="container my-5">
+    <!-- Главный баннер -->
+    <section id="top" class="text-center mb-5">
+        <img src="{% static 'images/moes-logo.jpg' %}" alt="Moe's Tavern" class="img-fluid" style="max-height: 200px;">
+        <h1 class="mt-3">Добро пожаловать в барбершоп "Moe's Tavern"!</h1>
+        <p class="lead">Лучшие стрижки в городе с 1989 года</p>
+    </section>
 
-    <!-- Основное содержимое главной страницы -->
-    <div class="container">
-        <p class="text-center">Добро пожаловать на официальный сайт нашего барбершопа. Мы предлагаем широкий спектр услуг для вашего комфорта и стиля.</p>
-    </div>
-
-    <!-- Блоки для навигации по основным разделам -->
-    <div class="container text-center">
-        <div class="row">
-            <div class="col-md-3">
-                <a href="{% url 'about' %}" class="nav-block">
-                    <div class="nav-block-content p-3 bg-light rounded shadow-sm">
-                        <h3>О нас</h3>
-                        <p>Узнайте больше о нашем барбершопе и нашей команде.</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="{% url 'services' %}" class="nav-block">
-                    <div class="nav-block-content p-3 bg-light rounded shadow-sm">
-                        <h3>Услуги</h3>
-                        <p>Посмотрите, какие услуги мы предлагаем.</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="{% url 'masters' %}" class="nav-block">
-                    <div class="nav-block-content p-3 bg-light rounded shadow-sm">
-                        <h3>Мастера</h3>
-                        <p>Познакомьтесь с нашими мастерами.</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="{% url 'appointment' %}" class="nav-block">
-                    <div class="nav-block-content p-3 bg-light rounded shadow-sm">
-                        <h3>Запись</h3>
-                        <p>Запишитесь на услугу онлайн.</p>
-                    </div>
-                </a>
-            </div>
+    <!-- О нас (кратко) -->
+    <section class="row mb-5">
+        <div class="col-md-6">
+            <h2>Почему Moe's Tavern?</h2>
+            <p>Мы сочетаем лучшие традиции барберинга с атмосферой знаменитого паба из Спрингфилда.</p>
+            <a href="{% url 'about' %}" class="btn btn-outline-primary">Подробнее о нас</a>
         </div>
-    </div>
+        <div class="col-md-6">
+            <img src="{% static 'images/moes-interior.jpg' %}" class="img-fluid rounded" alt="Интерьер">
+        </div>
+    </section>
+
+    <!-- Услуги -->
+    <section id="services" class="py-5 border-top">
+        <h2 class="text-center mb-4">Наши услуги</h2>
+        <div class="row">
+            <!-- Здесь будут услуги -->
+        </div>
+    </section>
+
+    <!-- Мастера -->
+    <section id="masters" class="py-5 border-top">
+        <h2 class="text-center mb-4">Наши мастера</h2>
+        <div class="row">
+            <!-- Здесь будут мастера -->
+        </div>
+    </section>
+
+    <!-- Отзывы -->
+    <section id="reviews" class="py-5 border-top">
+        <h2 class="text-center mb-4">Отзывы клиентов</h2>
+        <div class="row">
+            <!-- Здесь будут отзывы -->
+        </div>
+    </section>
+
+    <!-- Форма записи -->
+    <section id="get-order" class="py-5 border-top">
+        <h2 class="text-center mb-4">Записаться онлайн</h2>
+        <!-- Здесь будет форма -->
+    </section>
+</div>
 {% endblock %}

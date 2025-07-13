@@ -1,13 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="container mt-4">
     {% if user.is_staff %}
-        <h1>Список заявок</h1>
-        <div class="flex-container">
+        <h1 class="text-center mb-4">Список заявок Moe's Tavern</h1>
+        <div class="row">
             {% for order in orders %}
-                {% include "order_detail.html" with order=order %}
+                <div class="col-md-4 mb-4">
+                    {% include "include_order_card.html" with order=order %}
+                </div>
             {% endfor %}
         </div>
     {% else %}
-        <p>У вас нет прав для просмотра списка заявок.</p>
+        <div class="alert alert-warning text-center">
+            <h4>Доступ запрещён</h4>
+            <p>Только сотрудники Moe's Tavern могут просматривать этот раздел</p>
+            <a href="{% url 'landing' %}" class="btn btn-primary">На главную</a>
+        </div>
     {% endif %}
+</div>
 {% endblock content %}

@@ -1,30 +1,30 @@
+{% load static %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid justify-content-center">
+        <a class="navbar-brand" href="{% url 'landing' %}">
+            <img src="{% static 'images/moes-logo-small.jpg' %}" alt="Moe's Tavern" height="40">
+        </a>
         <div class="d-flex">
-            <!-- Основные ссылки -->
             <a href="{% url 'landing' %}" class="nav-block">
-                <div class="nav-block-content">Главная</div>
+                <div class="nav-block-content"><i class="bi bi-house-door"></i> Главная</div>
             </a>
-            <a href="{% url 'thanks' %}" class="nav-block">
-                <div class="nav-block-content">Спасибо за заявку</div>
+            <a href="{% url 'about' %}" class="nav-block">
+                <div class="nav-block-content"><i class="bi bi-info-circle"></i> О нас</div>
             </a>
-            <a href="{% url 'orders_list' %}" class="nav-block">
-                <div class="nav-block-content">Список заявок</div>
+            <a href="{% url 'landing' %}#services" class="nav-block">
+                <div class="nav-block-content"><i class="bi bi-scissors"></i> Услуги</div>
             </a>
-
-            <!-- Якорные ссылки для секций на главной странице -->
-            <a href="{% url 'landing' %}about" class="nav-block">
-                <div class="nav-block-content">О нас</div>
+            <a href="{% url 'landing' %}#masters" class="nav-block">
+                <div class="nav-block-content"><i class="bi bi-person-badge"></i> Мастера</div>
             </a>
-            <a href="{% url 'landing' %}services" class="nav-block">
-                <div class="nav-block-content">Услуги</div>
+            <a href="{% url 'landing' %}#reviews" class="nav-block">
+                <div class="nav-block-content"><i class="bi bi-chat-left-text"></i> Отзывы</div>
             </a>
-            <a href="{% url 'landing' %}masters" class="nav-block">
-                <div class="nav-block-content">Мастера</div>
-            </a>
-            <a href="{% url 'landing' %}appointment" class="nav-block">
-                <div class="nav-block-content">Запись</div>
-            </a>
+            {% if user.is_staff %}
+                <a href="{% url 'orders' %}" class="nav-block">
+                    <div class="nav-block-content"><i class="bi bi-clipboard-data"></i> Заявки</div>
+                </a>
+            {% endif %}
         </div>
     </div>
 </nav>
