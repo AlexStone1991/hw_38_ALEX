@@ -23,35 +23,57 @@
             <img src="{% static 'images/moes-interior.jpg' %}" class="img-fluid rounded" alt="Интерьер">
         </div>
     </section>
-
-    <!-- Услуги -->
-    <section id="services" class="py-5 border-top">
-        <h2 class="text-center mb-4">Наши услуги</h2>
-        <div class="row">
-            <!-- Здесь будут услуги -->
-        </div>
-    </section>
-
-    <!-- Мастера -->
-    <section id="masters" class="py-5 border-top">
+<div class="container my-5">
+    <!-- Секция мастеров (строго по ТЗ) -->
+    <section class="mb-5">
         <h2 class="text-center mb-4">Наши мастера</h2>
-        <div class="row">
-            <!-- Здесь будут мастера -->
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for master in masters %}
+            <div class="col">
+                <div class="card h-100 border-warning shadow-sm">
+                    {% if master.photo %}
+                    <img src="{{ master.photo.url }}" class="card-img-top" alt="{{ master.name }}" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ master.name }}</h5>
+                        <p class="card-text">
+                            <i class="bi bi-star-fill text-warning"></i> 
+                            Опыт: {{ master.experience }} лет
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </section>
 
-    <!-- Отзывы -->
-    <section id="reviews" class="py-5 border-top">
-        <h2 class="text-center mb-4">Отзывы клиентов</h2>
-        <div class="row">
-            <!-- Здесь будут отзывы -->
+    <!-- Секция отзывов (строго по ТЗ) -->
+    <section>
+        <h2 class="text-center mb-4">Отзывы о нас</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for review in reviews %}
+            <div class="col">
+                <div class="card h-100 border-info shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">{{ review.client_name }}</h5>
+                            <span class="badge bg-primary">{{ review.master.name }}</span>
+                        </div>
+                        <p class="card-text">{{ review.text }}</p>
+                        <div class="rating">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= review.rating %}
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                {% else %}
+                                    <i class="bi bi-star text-warning"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-    </section>
-
-    <!-- Форма записи -->
-    <section id="get-order" class="py-5 border-top">
-        <h2 class="text-center mb-4">Записаться онлайн</h2>
-        <!-- Здесь будет форма -->
     </section>
 </div>
 {% endblock %}

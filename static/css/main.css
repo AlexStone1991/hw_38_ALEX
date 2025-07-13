@@ -172,3 +172,23 @@ h1, h2, h3, h4 {
 .bg-confirmed::before { content: "✅ "; }
 .bg-completed::before { content: "✔️ "; }
 .bg-canceled::before { content: "❌ "; }
+
+.footer {
+    background-color: #FFD90F !important;
+    border-top: 3px solid #1D6FC4 !important;
+}
+
+.footer h5 {
+    color: #1D6FC4;
+    font-weight: bold;
+}
+
+.social-links a {
+    color: #1D6FC4;
+    transition: all 0.3s;
+}
+
+.social-links a:hover {
+    color: #FF9800;
+    transform: scale(1.2);
+}
