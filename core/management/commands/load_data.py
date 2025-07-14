@@ -13,30 +13,26 @@ class Command(BaseCommand):
 
         # Данные мастеров
         masters_data = [
-            {"name": "Мо Сизлак", "experience": 12, "phone": "+1234567890", "address": "Ул. Вечнозелёная, 742", "is_active": True},
-            {"name": "Барни Гамбл", "experience": 8, "phone": "+1234567891", "address": "Ул. Пьяная, 1", "is_active": True},
-            {"name": "Апу Нахасапимапетилон", "experience": 10, "phone": "+1234567892", "address": "Мини-маркет Kwik-E-Mart", "is_active": True},
-            {"name": "Доктор Хибберт", "experience": 15, "phone": "+1234567893", "address": "Медцентр Спрингфилда", "is_active": True},
-            {"name": "Шеф Виггам", "experience": 9, "phone": "+1234567894", "address": "Полицейский участок", "is_active": True},
-            {"name": "Лиза Симпсон", "experience": 3, "phone": "+1234567895", "address": "Школа Спрингфилда", "is_active": True},
-            {"name": "Клоун Красти", "experience": 7, "phone": "+1234567896", "address": "Театр Красти", "is_active": True},
-            {"name": "Неду Фландерс", "experience": 5, "phone": "+1234567897", "address": "Дом по соседству", "is_active": True},
-            {"name": "Великий Чумба", "experience": 20, "phone": "+1234567898", "address": "Цирк", "is_active": True},
-            {"name": "Снейк", "experience": 6, "phone": "+1234567899", "address": "Тюрьма Спрингфилда", "is_active": False}
+            {"name": "Алексей Петров", "experience": 12, "phone": "+79123456789", "address": "ул. Ленина, 10", "is_active": True},
+            {"name": "Иван Иванов", "experience": 8, "phone": "+79123456788", "address": "ул. Пушкина, 15", "is_active": True},
+            {"name": "Мария Сидорова", "experience": 10, "phone": "+79123456787", "address": "ул. Гоголя, 20", "is_active": True},
+            {"name": "Анна Кузнецова", "experience": 15, "phone": "+79123456786", "address": "ул. Толстого, 25", "is_active": True},
+            {"name": "Дмитрий Смирнов", "experience": 9, "phone": "+79123456785", "address": "ул. Чехова, 30", "is_active": True},
+            {"name": "Ольга Васильева", "experience": 7, "phone": "+79123456784", "address": "ул. Достоевского, 35", "is_active": True},
         ]
 
         # Данные услуг
         services_data = [
-            {"name": "Классическая стрижка", "price": 1500, "duration": 45, "description": "Аккуратная стрижка в стиле Гомера Симпсона", "is_popular": True},
-            {"name": "Бритьё опасной бритвой", "price": 2000, "duration": 30, "description": "Королевское бритьё как у мистера Бёрнса", "is_popular": True},
-            {"name": "Детская стрижка", "price": 1200, "duration": 40, "description": "Стрижка для маленьких непосед как у Барта", "is_popular": False},
-            {"name": "Окрашивание", "price": 3500, "duration": 90, "description": "Яркие цвета как у Мардж", "is_popular": True},
-            {"name": "Укладка премиум", "price": 1800, "duration": 25, "description": "Стильная укладка как у Лизи", "is_popular": False},
-            {"name": "Камуфляж лысины", "price": 2500, "duration": 60, "description": "Маскировка проплешин как у дяди Пита", "is_popular": True},
-            {"name": "Бородатый стиль", "price": 2200, "duration": 50, "description": "Уход за бородой как у Мо", "is_popular": True},
-            {"name": "Креативный авангард", "price": 3000, "duration": 75, "description": "Смелый стиль как у клоуна Красти", "is_popular": False},
-            {"name": "Экспресс-стрижка", "price": 1000, "duration": 20, "description": "Быстро и качественно между кружками пива", "is_popular": True},
-            {"name": "Полный образ", "price": 5000, "duration": 120, "description": "Комплексный уход как для звезды шоу-бизнеса", "is_popular": True}
+            {"name": "Классическая стрижка", "price": 1500.00, "duration": 45, "description": "Аккуратная стрижка", "is_popular": True},
+            {"name": "Бритье опасной бритвой", "price": 2000.00, "duration": 30, "description": "Классическое бритье", "is_popular": True},
+            {"name": "Стрижка машинкой", "price": 1200.00, "duration": 40, "description": "Современная стрижка машинкой", "is_popular": False},
+            {"name": "Окрашивание", "price": 3500.00, "duration": 90, "description": "Окрашивание волос", "is_popular": True},
+            {"name": "Укладка", "price": 1800.00, "duration": 25, "description": "Стильная укладка", "is_popular": False},
+            {"name": "Коррекция бороды", "price": 2500.00, "duration": 60, "description": "Коррекция формы бороды", "is_popular": True},
+            {"name": "Стрижка бороды", "price": 2200.00, "duration": 50, "description": "Уход за бородой", "is_popular": True},
+            {"name": "Комплексный уход", "price": 3000.00, "duration": 75, "description": "Полный уход за волосами", "is_popular": False},
+            {"name": "Экспресс-стрижка", "price": 1000.00, "duration": 20, "description": "Быстрая стрижка", "is_popular": True},
+            {"name": "Вечерняя укладка", "price": 5000.00, "duration": 120, "description": "Укладка для вечернего выхода", "is_popular": True}
         ]
 
         # Создание услуг
@@ -52,20 +48,21 @@ class Command(BaseCommand):
             new_master.services.set(random.sample(services, k=random.randint(3, 5)))
             masters.append(new_master)
 
-        # Создание отзывов
+        # Данные отзывов
         reviews_data = [
-            {"text": "Отличный мастер!", "client_name": "Клиент 1", "rating": 5},
-            {"text": "Очень доволен результатом.", "client_name": "Клиент 2", "rating": 4},
-            {"text": "Профессионал своего дела.", "client_name": "Клиент 3", "rating": 5},
-            {"text": "Спасибо за отличную стрижку!", "client_name": "Клиент 4", "rating": 4},
-            {"text": "Рекомендую всем!", "client_name": "Клиент 5", "rating": 5},
-            {"text": "Очень вежливый и аккуратный.", "client_name": "Клиент 6", "rating": 4},
-            {"text": "Приятно удивлен качеством.", "client_name": "Клиент 7", "rating": 5},
-            {"text": "Отличный сервис!", "client_name": "Клиент 8", "rating": 5},
-            {"text": "Очень доволен.", "client_name": "Клиент 9", "rating": 4},
-            {"text": "Спасибо за отличную работу!", "client_name": "Клиент 10", "rating": 5}
+            {"text": "Отличный мастер! Очень доволен результатом.", "client_name": "Алексей", "rating": 5},
+            {"text": "Профессионал своего дела. Рекомендую всем!", "client_name": "Иван", "rating": 5},
+            {"text": "Очень вежливый и аккуратный. Спасибо за отличную стрижку!", "client_name": "Сергей", "rating": 4},
+            {"text": "Приятно удивлен качеством. Буду приходить еще.", "client_name": "Антон", "rating": 5},
+            {"text": "Спасибо за отличную работу! Все очень понравилось.", "client_name": "Дмитрий", "rating": 5},
+            {"text": "Не очень понравилось. Мастер немного торопился.", "client_name": "Олег", "rating": 3},
+            {"text": "Все хорошо, но можно было бы и лучше.", "client_name": "Михаил", "rating": 4},
+            {"text": "Не совсем то, что я ожидал. Возможно, в следующий раз выберу другого мастера.", "client_name": "Владимир", "rating": 2},
+            {"text": "Отличный сервис! Очень доволен.", "client_name": "Андрей", "rating": 5},
+            {"text": "Спасибо за отличную стрижку! Все супер.", "client_name": "Николай", "rating": 5}
         ]
 
+        # Создание отзывов
         for review in reviews_data:
             Review.objects.create(
                 text=review["text"],

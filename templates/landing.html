@@ -23,16 +23,17 @@
             <img src="{% static 'images/moes-interior.jpg' %}" class="img-fluid rounded" alt="Интерьер">
         </div>
     </section>
-<div class="container my-5">
+
+    <!-- Наши мастера -->
     <section id="masters-section" class="mb-5 py-3">
         <h2 class="text-center mb-4">Наши мастера</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for master in masters %}
             <div class="col">
                 <div class="card h-100 border-warning shadow-sm">
-                    {% if master.photo %}
-                    <img src="{{ master.photo.url }}" class="card-img-top" alt="{{ master.name }}" style="height: 300px; object-fit: cover;">
-                    {% endif %}
+                    <div class="ratio ratio-1x1"> <!-- Фикс для фото -->
+                        <img src="{{ master.photo.url }}" class="card-img-top" alt="{{ master.name }}" style="object-fit: cover; object-position: top;">
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ master.name }}</h5>
                         <p class="card-text">
@@ -45,9 +46,11 @@
             {% endfor %}
         </div>
     </section>
+
+    <!-- Отзывы с кнопкой "Показать еще" -->
     <section id="reviews-section" class="py-3">
         <h2 class="text-center mb-4">Отзывы о нас</h2>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="reviews-container">
             {% for review in reviews %}
             <div class="col">
                 <div class="card h-100 border-info shadow-sm">
@@ -71,6 +74,14 @@
             </div>
             {% endfor %}
         </div>
+
+        {% if total_reviews > 6 and not show_all %}
+<div class="text-center mt-4">
+    <a href="?show_all=1" class="btn btn-warning btn-lg">
+        <i class="bi bi-arrow-down-circle"></i> Показать еще отзывы
+    </a>
+</div>
+{% endif %}
     </section>
 </div>
 {% endblock %}

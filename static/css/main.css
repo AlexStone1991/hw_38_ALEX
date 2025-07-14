@@ -199,3 +199,13 @@ html {
 section {
     scroll-margin-top: 80px; 
 }
+
+.btn-load-more {
+    background-color: var(--yellow);
+    border: 2px solid var(--blue);
+    transition: all 0.3s;
+}
+.btn-load-more:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
