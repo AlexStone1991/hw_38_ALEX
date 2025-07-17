@@ -5,7 +5,7 @@ from django.contrib import messages
 from core.context_processors import menu_items
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
-from django.db.models import Q, Count, Sum
+from django.db.models import Q, Count, Sum, Prefetch
 from django.shortcuts import get_object_or_404
 from .forms import OrderForm
 from django.http import JsonResponse
@@ -14,15 +14,6 @@ def about(request):
     # Здесь можно добавить логику для страницы "О нас"
     return render(request, 'about.html')
 
-# def landing(request):
-# # главная страница
-#     masters = Master.objects.filter(is_active=True).prefetch_related('services')
-#     reviews = Review.objects.filter(is_published=True).select_related('master')[:6]
-#     context = {
-#         'masters': masters,
-#         'reviews': reviews,
-#     }
-#     return render(request, 'landing.html', context)
 def landing(request):
     show_all = request.GET.get('show_all', False)
     all_reviews = Review.objects.filter(is_published=True).select_related('master')
@@ -30,9 +21,9 @@ def landing(request):
     # Всегда считаем общее количество ОТДЕЛЬНО от среза
     total_reviews = all_reviews.count()
     reviews = all_reviews[:6] if not show_all else all_reviews
-    
+    masters = Master.objects.prefetch_related('services').annotate(num_services=Count('services'))
     context = {
-        'masters': Master.objects.filter(is_active=True),
+        'masters': masters,
         'reviews': reviews,
         'show_all': show_all,
         'total_reviews': total_reviews,  # Добавляем в контекст

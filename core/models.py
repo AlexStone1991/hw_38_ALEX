@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Service(models.Model):
-    name = models.CharField(max_length=50, verbose_name="Название")
+    name = models.CharField(max_length=200, verbose_name="Название")
     description = models.TextField(blank=True, verbose_name="Описание")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
     duration = models.PositiveIntegerField(verbose_name="Длительность", help_text="Время выполнения в минутах")
@@ -42,7 +42,7 @@ class Order(models.Model):
     client_name = models.CharField(max_length=100, verbose_name="Имя клиента")
     phone = models.CharField(max_length=20, verbose_name="Телефон")
     comment = models.TextField (blank=True, verbose_name="Комментарий")
-    status = models.CharField (max_length=50, choices=STATUS_CHOICES, default="not_approved", verbose_name="Статус")
+    status = models.CharField (max_length=50, choices=STATUS_CHOICES, default="new", verbose_name="Статус")
     date_created = models.DateTimeField (auto_now_add=True, verbose_name="Дата создания")
     date_updated = models.DateTimeField (auto_now=True, verbose_name="Дата обновления")
     master = models.ForeignKey (Master, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Мастер")

@@ -1,129 +1,126 @@
 from django.contrib import admin
-from .models import Master, Order, Service, Review
-from django.db.models import Q, Count, Sum, QuerySet
+from django.db.models import Sum
+from django.utils.html import format_html
+from .models import Service, Master, Review, Order
 
-# Фильтр для OrderAdmin по общей сумме заказа (из кода преподавателя)
-class TotalOrderPrice(admin.SimpleListFilter):
-    title = "По общей сумме заказа"
-    parameter_name = "total_order_price"
+# Фильтр по сумме заказа
+class TotalPriceFilter(admin.SimpleListFilter):
+    title = 'Сумма заказа'
+    parameter_name = 'total_price'
 
     def lookups(self, request, model_admin):
         return (
-            ("one_thousend", "До тысячи"),
-            ("three_thousend", "До трех тысяч"),
-            ("five_thousend", "До пяти тысяч"),
-            ("up_five_thousend", "Свыше пяти тысяч"),
+            ('<1000', 'До 1000 руб'),
+            ('1000-3000', '1000-3000 руб'),
+            ('>3000', 'Более 3000 руб'),
         )
-    
+
     def queryset(self, request, queryset):
-        queryset = queryset.annotate(total_price_agg=Sum("services__price"))
-        
-        if self.value() == "one_thousend":
-            return queryset.filter(total_price_agg__lt=1000)
-        if self.value() == "three_thousend":
-            return queryset.filter(total_price_agg__gte=1000, total_price_agg__lt=3000)
-        if self.value() == "five_thousend":
-            return queryset.filter(total_price_agg__gte=3000, total_price_agg__lt=5000)
-        if self.value() == "up_five_thousend":
-            return queryset.filter(total_price_agg__gte=5000)
-        
-        return queryset
+        queryset = queryset.annotate(total=Sum('services__price'))
+        if self.value() == '<1000':
+            return queryset.filter(total__lt=1000)
+        if self.value() == '1000-3000':
+            return queryset.filter(total__range=(1000, 3000))
+        if self.value() == '>3000':
+            return queryset.filter(total__gt=3000)
 
-@admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
-    # Исправлено: client_name вместо name + добавлены улучшения
-    list_display = (
-        "id",
-        "client_name",  # Исправленное поле
-        "phone",
-        "formatted_master",  # Кастомное отображение мастера
-        "date_created",
-        "appointment_date",
-        "status",
-        "total_price",
-        "total_income",
-        "formatted_services",  # Кастомное отображение услуг
-    )
-    
-    search_fields = ("client_name", "phone", "status", "master__name")  # Добавлен поиск по мастеру
-    list_filter = ("status", "master", "services", TotalOrderPrice)
-    list_per_page = 5
-    list_display_links = ("phone", "client_name")
-    list_editable = ("status",)
-    readonly_fields = ("date_created", "date_updated")
-    date_hierarchy = "date_created"  # Добавлена временная шкала
-    filter_horizontal = ("services",)  # Удобный выбор услуг
+# Инлайн для услуг мастера
+class MasterServicesInline(admin.TabularInline):
+    model = Master.services.through
+    extra = 1
+    verbose_name = "Доступная услуга"
+    autocomplete_fields = ['service']
 
-    actions = ("mark_completed", "mark_canceled", "mark_new", "mark_confirmed")
+# Инлайн для отзывов
+class ReviewsInline(admin.TabularInline):
+    model = Review
+    extra = 0
+    readonly_fields = ['created_at']
+    fields = ['client_name', 'master', 'rating', 'is_published', 'created_at']
 
-    # Кастомные методы отображения (новые)
-    @admin.display(description="Мастер")
-    def formatted_master(self, obj):
-        return obj.master.name if obj.master else "Не назначен"
-
-    @admin.display(description="Услуги")
-    def formatted_services(self, obj):
-        return ", ".join([s.name for s in obj.services.all()])
-
-    # Методы из кода преподавателя
-    @admin.action(description="Отметить как завершенные")
-    def mark_completed(self, request, queryset):
-        queryset.update(status="completed")
-
-    @admin.action(description="Отметить как отмененная")
-    def mark_canceled(self, request, queryset):
-        queryset.update(status="canceled")
-
-    @admin.action(description="Отметить как новая")
-    def mark_new(self, request, queryset):
-        queryset.update(status="new")
-
-    @admin.action(description="Отметить как подтвержденная")
-    def mark_confirmed(self, request, queryset):
-        queryset.update(status="confirmed")
-
-    @admin.display(description="Общая сумма")
-    def total_price(self, obj):
-        return sum(service.price for service in obj.services.all())
-
-    @admin.display(description="Выручка")
-    def total_income(self, obj):
-        orders = Order.objects.filter(
-            phone=obj.phone, 
-            status="completed"
-        ).prefetch_related("services")
-        return sum(service.price for order in orders for service in order.services.all())
-
-# Улучшенные админ-классы для других моделей
-@admin.register(Master)
-class MasterAdmin(admin.ModelAdmin):
-    list_display = ("name", "phone", "experience", "is_active", "service_count")
-    list_filter = ("is_active", "services")
-    search_fields = ("name", "phone")
-    filter_horizontal = ("services",)  # Удобное управление услугами
-    
-    @admin.display(description="Кол-во услуг")
-    def service_count(self, obj):
-        return obj.services.count()
+# Инлайн для услуг в заказе
+class OrderServicesInline(admin.TabularInline):
+    model = Order.services.through
+    extra = 1
+    verbose_name = "Услуга в заказе"
+    autocomplete_fields = ['service']
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ("name", "price", "duration", "is_popular", "master_count")
-    list_filter = ("is_popular",)
-    search_fields = ("name",)
-    ordering = ("name",)
+    list_display = ['name', 'price', 'duration', 'masters_count']
+    search_fields = ['name']
+    list_filter = ['is_popular']
     
-    @admin.display(description="Мастеров")
-    def master_count(self, obj):
+    def masters_count(self, obj):
         return obj.masters.count()
+    masters_count.short_description = "Мастеров"
+
+@admin.register(Master)
+class MasterAdmin(admin.ModelAdmin):
+    list_display = ['name', 'experience', 'active_status', 'services_list']
+    list_filter = ['is_active']
+    search_fields = ['name', 'phone']
+    inlines = [MasterServicesInline, ReviewsInline]
+    exclude = ['services']
+    
+    def services_list(self, obj):
+        return ", ".join(s.name for s in obj.services.all()[:3])
+    services_list.short_description = "Услуги"
+    
+    def active_status(self, obj):
+        return "✅" if obj.is_active else "❌"
+    active_status.short_description = "Активен"
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['id', 'client_name', 'phone', 'appointment_date', 
+                'status_badge', 'get_total_price', 'master_info']
+    list_filter = ['status', TotalPriceFilter, 'master']
+    search_fields = ['client_name', 'phone']
+    inlines = [OrderServicesInline]
+    exclude = ['services']
+    readonly_fields = ['date_created', 'date_updated']
+    actions = ['mark_completed', 'mark_confirmed']
+    
+    def get_total_price(self, obj):
+        return sum(s.price for s in obj.services.all())
+    get_total_price.short_description = "Сумма"
+    
+    def status_badge(self, obj):
+        colors = {
+            'new': 'orange',
+            'confirmed': 'blue',
+            'completed': 'green',
+            'canceled': 'red'
+        }
+        return format_html(
+            '<span style="background-color: {}; color: white; padding: 3px 8px; border-radius: 10px">{}</span>',
+            colors[obj.status],
+            obj.get_status_display()
+        )
+    status_badge.short_description = "Статус"
+    
+    def master_info(self, obj):
+        if obj.master:
+            return format_html('<a href="/admin/core/master/{}/change/">{}</a>',
+                            obj.master.id, obj.master.name)
+        return "-"
+    master_info.short_description = "Мастер"
+    
+    @admin.action(description="Отметить как завершенные")
+    def mark_completed(self, request, queryset):
+        queryset.update(status='completed')
+    
+    @admin.action(description="Подтвердить выбранные")
+    def mark_confirmed(self, request, queryset):
+        queryset.update(status='confirmed')
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ("client_name", "master", "rating_stars", "created_at", "is_published")
-    list_filter = ("rating", "is_published", "master")
-    search_fields = ("client_name", "master__name")
-    date_hierarchy = "created_at"
+    list_display = ['client_name', 'master', 'rating_stars', 'is_published']
+    list_filter = ['rating', 'is_published']
+    search_fields = ['client_name', 'text']
     
-    @admin.display(description="Рейтинг")
     def rating_stars(self, obj):
-        return "★" * obj.rating + "☆" * (5 - obj.rating)
+        return '★' * obj.rating + '☆' * (5 - obj.rating)
+    rating_stars.short_description = "Рейтинг"
