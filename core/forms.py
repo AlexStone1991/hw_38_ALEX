@@ -1,21 +1,16 @@
 from django import forms
-from .models import Order, Service, Master
+from .models import Order, Service
+from django.forms import DateTimeInput
 
 class OrderForm(forms.ModelForm):
-    service = forms.ModelChoiceField(
-        queryset=Service.objects.all(), 
-        widget=forms.HiddenInput(),
-    )
-
     class Meta:
         model = Order
-        fields = ['client_name', 'phone', 'comment', 'service', "master", "comment"]
+        fields = ['client_name', 'phone', 'appointment_date', 'comment']
         widgets = {
-            "appointment_date": forms.DateTimeInput(attrs={"type": "datetime-local"}),
+            'appointment_date': DateTimeInput(attrs={'type': 'datetime-local'}),
         }
 
-    def __init__(self, *args, **kwargs):
-        service = kwargs.pop('service', None)
+    def __init__(self, *args, service=None, **kwargs):
         super().__init__(*args, **kwargs)
-        if service:
-            self.fields['master'].queryset = Master.objects.filter(services=service)
+        self.service = service
+        self.fields['appointment_date'].required = True

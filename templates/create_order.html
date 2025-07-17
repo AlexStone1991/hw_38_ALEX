@@ -1,17 +1,66 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container my-5">
-    <h2>Запись на услугу: {{ service.name }}</h2>
-    <div class="card mt-4">
-        <div class="card-body">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-warning">
-                    <i class="bi bi-calendar-plus"></i> Подтвердить запись
-                </button>
-            </form>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-warning shadow">
+                <div class="card-header bg-warning text-black">
+                    <h2 class="h4 mb-0">Запись на услугу: {{ service.name }}</h2>
+                </div>
+                
+                <div class="card-body p-4">
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <!-- Имя -->
+                        <div class="mb-3">
+                            <label for="{{ form.client_name.id_for_label }}" class="form-label fw-bold">
+                                <span class="text-warning">●</span> Ваше имя
+                            </label>
+                            {{ form.client_name }}
+                            <div class="invalid-feedback">
+                                Пожалуйста, введите имя
+                            </div>
+                        </div>
+                        
+                        <!-- Телефон -->
+                        <div class="mb-3">
+                            <label for="{{ form.phone.id_for_label }}" class="form-label fw-bold">
+                                <span class="text-warning">●</span> Телефон
+                            </label>
+                            {{ form.phone }}
+                            <div class="invalid-feedback">
+                                Введите номер телефона
+                            </div>
+                        </div>
+                        
+                        <!-- Дата и время -->
+                        <div class="mb-3">
+                            <label for="{{ form.appointment_date.id_for_label }}" class="form-label fw-bold">
+                                <span class="text-warning">●</span> Дата и время
+                            </label>
+                            {{ form.appointment_date }}
+                        </div>
+                        
+                        <!-- Комментарий -->
+                        <div class="mb-4">
+                            <label for="{{ form.comment.id_for_label }}" class="form-label fw-bold">
+                                <span class="text-warning">●</span> Комментарий
+                            </label>
+                            {{ form.comment }}
+                        </div>
+                        
+                        <!-- Кнопка -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-warning btn-lg py-3 fw-bold">
+                                Подтвердить запись
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
