@@ -105,7 +105,7 @@ class MasterAdmin(admin.ModelAdmin):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'client_name', 'phone', 'appointment_date', 
-                'status_badge', 'get_total_price', 'master_info']
+                'status', 'get_total_price', 'master_info']
     list_filter = ['status', TotalPriceFilter, 'master', AppointmentDateFilter]
     list_editable = ['status']
     search_fields = ['client_name', 'phone']

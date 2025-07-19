@@ -48,7 +48,6 @@ class Order(models.Model):
     master = models.ForeignKey (Master, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Мастер")
     services = models.ManyToManyField (Service, related_name="orders", verbose_name="Услуги")
     appointment_date = models.DateTimeField (verbose_name="Дата и время записи")
-
     def __str__(self):
         return f"Заказ {self.id} - {self.client_name}"
     
