@@ -1,7 +1,34 @@
 from django.contrib import admin
 from django.db.models import Sum
 from django.utils.html import format_html
+from django.utils import timezone
+from datetime import timedelta
 from .models import Service, Master, Review, Order
+
+
+class AppointmentDateFilter(admin.SimpleListFilter):
+    title = 'Дата записи'
+    parameter_name = 'appointment_date'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('today', 'Сегодня'),
+            ('week', 'На неделе'),
+            ('month', 'В этом месяце'),
+        )
+    
+    def queryset(self, request, queryset):
+        now = timezone.now()
+        if self.value() == 'today':
+            today = now.date()
+            return queryset.filter(appointment_date__date=today)
+        if self.value() == 'tomorrow':
+            tomorrow = now.date() + timedelta(days=1)
+            return queryset.filter(appointment_date__date=tomorrow)
+        if self.value() == 'this_week':
+            start_week = now.date() - timedelta(days=now.weekday())
+            end_week = start_week + timedelta(days=6)
+            return queryset.filter(appointment_date__date__range=[start_week, end_week])
 
 # Фильтр по сумме заказа
 class TotalPriceFilter(admin.SimpleListFilter):
@@ -57,7 +84,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(Master)
 class MasterAdmin(admin.ModelAdmin):
-    list_display = ['name', 'experience', 'active_status', 'services_list']
+    list_display = ['name', 'experience', 'active_status', 'services_list', 'services_count']
     list_filter = ['is_active']
     search_fields = ['name', 'phone']
     inlines = [MasterServicesInline, ReviewsInline]
@@ -71,16 +98,21 @@ class MasterAdmin(admin.ModelAdmin):
         return "✅" if obj.is_active else "❌"
     active_status.short_description = "Активен"
 
+    def services_count(self, obj):
+        return obj.services.count()
+    services_count.short_description = "Кол-во услуг"
+
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'client_name', 'phone', 'appointment_date', 
                 'status_badge', 'get_total_price', 'master_info']
-    list_filter = ['status', TotalPriceFilter, 'master']
+    list_filter = ['status', TotalPriceFilter, 'master', AppointmentDateFilter]
+    list_editable = ['status']
     search_fields = ['client_name', 'phone']
     inlines = [OrderServicesInline]
     exclude = ['services']
     readonly_fields = ['date_created', 'date_updated']
-    actions = ['mark_completed', 'mark_confirmed']
+    actions = ['mark_completed', 'mark_confirmed', 'mark_canceled', 'mark_in_progress']
     
     def get_total_price(self, obj):
         return sum(s.price for s in obj.services.all())
@@ -114,6 +146,14 @@ class OrderAdmin(admin.ModelAdmin):
     @admin.action(description="Подтвердить выбранные")
     def mark_confirmed(self, request, queryset):
         queryset.update(status='confirmed')
+
+    @admin.action(description="Отменить выбранные")
+    def mark_canceled(self, request, queryset):
+        queryset.update(status='canceled')
+
+    @admin.action(description="Пометить 'В работе'")
+    def mark_in_progress(self, request, queryset):
+        queryset.update(status='in_progress')
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
