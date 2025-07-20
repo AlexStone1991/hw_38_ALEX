@@ -54,8 +54,9 @@ class TotalPriceFilter(admin.SimpleListFilter):
 # Инлайн для услуг мастера
 class MasterServicesInline(admin.TabularInline):
     model = Master.services.through
-    extra = 1
+    extra = 0
     verbose_name = "Доступная услуга"
+    verbose_name_plural = "Доступные услуги"
     autocomplete_fields = ['service']
 
 # Инлайн для отзывов
@@ -88,18 +89,20 @@ class MasterAdmin(admin.ModelAdmin):
     list_filter = ['is_active']
     search_fields = ['name', 'phone']
     inlines = [MasterServicesInline, ReviewsInline]
-    exclude = ['services']
-    
+
     def services_list(self, obj):
         return ", ".join(s.name for s in obj.services.all()[:3])
+
     services_list.short_description = "Услуги"
-    
+
     def active_status(self, obj):
         return "✅" if obj.is_active else "❌"
+
     active_status.short_description = "Активен"
 
     def services_count(self, obj):
         return obj.services.count()
+
     services_count.short_description = "Кол-во услуг"
 
 @admin.register(Order)

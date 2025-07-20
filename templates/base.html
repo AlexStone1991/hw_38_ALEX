@@ -93,5 +93,46 @@ setTimeout(() => {
 }, 5000);
 </script>
 {% endif %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const masterSelect = document.getElementById('id_master');
+    const servicesContainer = document.getElementById('servicesContainer');
+
+    masterSelect.addEventListener('change', function() {
+        const masterId = this.value;
+        if (!masterId) {
+            servicesContainer.innerHTML = '<small class="text-muted">Сначала выберите мастера</small>';
+            return;
+        }
+
+        fetch(`/api/master/${masterId}/services/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.services.length === 0) {
+                    servicesContainer.innerHTML = '<div class="text-muted">Нет доступных услуг</div>';
+                    return;
+                }
+
+                let html = '';
+                data.services.forEach(service => {
+                    html += `
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                               name="services" value="${service.id}" id="service_${service.id}">
+                        <label class="form-check-label" for="service_${service.id}">
+                            ${service.name} (${service.price} руб.)
+                        </label>
+                    </div>`;
+                });
+                servicesContainer.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                servicesContainer.innerHTML = '<div class="text-danger">Ошибка загрузки услуг</div>';
+            });
+    });
+});
+</script>
+
 </body>
 </html>
