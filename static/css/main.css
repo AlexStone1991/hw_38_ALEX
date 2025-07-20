@@ -243,3 +243,44 @@ section {
 .modal-content {
     border-radius: 15px;
 }
+/* Стили для кнопок в стиле Симпсонов */
+.btn-simpsons {
+    background-color: #FFD90F !important;
+    border: 2px solid #1D6FC4 !important;
+    color: #1D6FC4 !important;
+    font-weight: bold;
+    border-radius: 0.5rem;
+    transition: all 0.3s;
+}
+
+.btn-simpsons:hover {
+    background-color: #1D6FC4 !important;
+    color: #FFD90F !important;
+    transform: translateY(-2px);
+}
+
+.btn-simpsons-outline {
+    background-color: white !important;
+    border: 2px solid #1D6FC4 !important;
+    color: #1D6FC4 !important;
+    font-weight: bold;
+    border-radius: 0.5rem;
+    transition: all 0.3s;
+}
+
+.btn-simpsons-outline:hover {
+    background-color: #1D6FC4 !important;
+    color: white !important;
+}
+
+/* Дополнительные стили для карточек */
+.simpsons-card {
+    border: 2px solid #1D6FC4 !important;
+    border-radius: 1rem !important;
+    transition: all 0.3s;
+}
+
+.simpsons-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(29, 111, 196, 0.2);
+}

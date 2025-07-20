@@ -124,3 +124,26 @@ def master_services_api(request, master_id):
     return JsonResponse({
         'services': list(services) 
     })
+
+def master_detail(request, master_id):
+    master = get_object_or_404(
+        Master.objects.prefetch_related('services', 'review_set'),
+        id=master_id,
+        is_active=True
+    )
+    
+    if request.method == 'POST':
+        review_form = ReviewForm(request.POST, request.FILES)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.master = master
+            review.save()
+            return redirect('master_detail', master_id=master.id)
+    else:
+        review_form = ReviewForm(initial={'master': master})
+    
+    context = {
+        'master': master,
+        'review_form': review_form,
+    }
+    return render(request, 'master_detail.html', context)

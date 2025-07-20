@@ -19,7 +19,7 @@ class ReviewForm(forms.ModelForm):
 
 class OrderForm(forms.ModelForm):
     services = forms.ModelMultipleChoiceField(
-        queryset=Service.objects.all(),  # Изменили на all() вместо none()
+        queryset=Service.objects.all(),  
         widget=forms.CheckboxSelectMultiple,
         required=True
     )
@@ -34,13 +34,12 @@ class OrderForm(forms.ModelForm):
             }),
             "master": forms.Select(attrs={
                 'class': 'form-control',
-                'id': 'id_master'  # Добавили ID для JavaScript
+                'id': 'id_master' 
             }),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Если мастер уже выбран (при редактировании), фильтруем услуги
         if self.instance and self.instance.master:
             self.fields['services'].queryset = self.instance.master.services.all()
 

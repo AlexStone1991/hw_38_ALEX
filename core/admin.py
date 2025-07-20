@@ -157,10 +157,11 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ['client_name', 'master', 'rating_stars', 'is_published']
-    list_filter = ['rating', 'is_published']
+    list_display = ['client_name', 'master', 'rating_stars', "created_at",'is_published']
+    list_filter = ['rating', 'is_published', 'master']
     search_fields = ['client_name', 'text']
+    list_editable = ("is_published",)
     
+    @admin.display(description='Рейтинг')
     def rating_stars(self, obj):
         return '★' * obj.rating + '☆' * (5 - obj.rating)
-    rating_stars.short_description = "Рейтинг"
