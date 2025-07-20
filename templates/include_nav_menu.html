@@ -20,6 +20,9 @@
             <a href="{% url 'landing' %}#reviews-section" class="nav-block">
                 <div class="nav-block-content"><i class="bi bi-chat-left-text"></i> Отзывы</div>
             </a>
+            <a href="{% url 'create_review' %}" class="nav-block">
+                <div class="nav-block-content"><i class="bi bi-pencil-square"></i> Оставить отзыв</div>
+            </a>
             {% if user.is_staff %}
                 <a href="{% url 'orders' %}" class="nav-block">
                     <div class="nav-block-content"><i class="bi bi-clipboard-data"></i> Заявки</div>

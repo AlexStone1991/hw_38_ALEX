@@ -1,33 +1,128 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Услуги барбершопа{% endblock %}
+
 {% block content %}
-<div class="container my-5">
-    <h1 class="text-center mb-5">Наши услуги</h1>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Наши услуги</h2>
     
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for service in services %}
         <div class="col">
-            <div class="card h-100 border-warning">
+            <div class="card h-100 shadow-sm">
                 {% if service.image %}
                 <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.name }}" style="height: 200px; object-fit: cover;">
+                {% else %}
+                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                    <i class="bi bi-scissors fs-1 text-muted"></i>
+                </div>
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ service.name }}</h5>
-                    <p class="card-text">{{ service.description|default:"Описание услуги" }}</p>
-                </div>
-                <div class="card-footer bg-transparent border-warning">
-                    <a href="{% url 'create_order' service.id %}" class="btn btn-warning btn-sm mt-2">
-                        <i class="bi bi-calendar-plus"></i> Записаться
-                    </a>
+                    {% if service.description %}
+                    <p class="card-text">{{ service.description }}</p>
+                    {% endif %}
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="badge bg-primary">{{ service.price }}₽</span>
-                        <span class="text-muted">{{ service.duration }} мин</span>
+                        <span class="badge bg-primary">{{ service.price }} руб.</span>
+                        <span class="badge bg-secondary">{{ service.duration }} мин.</span>
                     </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#orderModal">
+                        <i class="bi bi-calendar-plus"></i> Записаться
+                    </button>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
+
+<!-- Модальное окно записи -->
+<div class="modal fade" id="orderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Запись на услугу</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'create_order' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Мастер</label>
+                        {{ form.master }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Дата и время</label>
+                        {{ form.appointment_date }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ваше имя</label>
+                        {{ form.client_name }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Телефон</label>
+                        {{ form.phone }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Услуги</label>
+                        <div id="servicesContainer" class="border p-2 rounded bg-light">
+                            <small class="text-muted">Сначала выберите мастера</small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Комментарий</label>
+                        {{ form.comment }}
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-check-circle"></i> Подтвердить запись
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const masterSelect = document.getElementById('id_master');
+    const servicesContainer = document.getElementById('servicesContainer');
+    
+    masterSelect.addEventListener('change', function() {
+        const masterId = this.value;
+        if (!masterId) {
+            servicesContainer.innerHTML = '<small class="text-muted">Сначала выберите мастера</small>';
+            return;
+        }
+        
+        fetch(`/api/master/${masterId}/services/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.services.length === 0) {
+                    servicesContainer.innerHTML = '<div class="text-muted">Нет доступных услуг</div>';
+                    return;
+                }
+                
+                let html = '';
+                data.services.forEach(service => {
+                    html += `
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" 
+                               name="services" value="${service.id}" id="service_${service.id}">
+                        <label class="form-check-label" for="service_${service.id}">
+                            ${service.name} (${service.price} руб.)
+                        </label>
+                    </div>`;
+                });
+                servicesContainer.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                servicesContainer.innerHTML = '<div class="text-danger">Ошибка загрузки услуг</div>';
+            });
+    });
+});
+</script>
 {% endblock %}

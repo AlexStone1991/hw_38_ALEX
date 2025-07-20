@@ -7,7 +7,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
 from django.db.models import Q, Count, Sum, Prefetch
 from django.shortcuts import get_object_or_404
-from .forms import OrderForm
+from .forms import OrderForm, ReviewForm
 from django.http import JsonResponse
 
 def about(request):
@@ -73,7 +73,10 @@ def order_detail(request, order_id):
 
 def services_list(request):
     services = Service.objects.all()
-    context = {"services": services}
+    context = {
+        "services": services,
+        "form": OrderForm()
+        }
     return render(request, "services.html", context=context)
 
 def create_order(request, service_id):
@@ -93,3 +96,31 @@ def create_order(request, service_id):
         {"form": form,
         "service": service
         })
+
+def create_review(request):
+    if request.method == "POST":
+        form = ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("thanks")
+    else:
+        form = ReviewForm()
+
+    return render(request, "create_review.html", {"form": form})
+
+def create_order(request):
+    if request.method == "POST":
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save()
+            return redirect("thanks")
+    else:
+        form = OrderForm()
+    return render(request, "create_order.html", {"form": form})
+
+def master_services_api(request, master_id):
+    master = get_object_or_404(Master, id=master_id)
+    services = master.services.all().values('id', 'name', 'price')  # Добавляем price
+    return JsonResponse({
+        'services': list(services) 
+    })
