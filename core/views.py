@@ -9,6 +9,8 @@ from django.db.models import Q, Count, Sum, Prefetch
 from django.shortcuts import get_object_or_404
 from .forms import OrderForm, ReviewForm
 from django.http import JsonResponse
+from django.utils import timezone
+from datetime import datetime
 
 def about(request):
     # Здесь можно добавить логику для страницы "О нас"
@@ -73,10 +75,14 @@ def order_detail(request, order_id):
 
 def services_list(request):
     services = Service.objects.all()
+    masters = Master.objects.all()
+    min_date = timezone.now().strftime('%Y-%m-%dT%H:%M')  # Убедитесь, что формат правильный
     context = {
         "services": services,
-        "form": OrderForm()
-        }
+        "masters": masters,
+        "form": OrderForm(),
+        "min_date": min_date
+    }
     return render(request, "services.html", context=context)
 
 def create_order(request, service_id):
@@ -125,6 +131,13 @@ def master_services_api(request, master_id):
         'services': list(services) 
     })
 
+def service_masters_api(request, service_id):
+    service = get_object_or_404(Service, id=service_id)
+    masters = service.masters.all().values('id', 'name')  # Получаем мастеров, предоставляющих эту услугу
+    return JsonResponse({
+        'masters': list(masters)
+    })
+
 def master_detail(request, master_id):
     master = get_object_or_404(
         Master.objects.prefetch_related('services', 'review_set'),
@@ -147,3 +160,10 @@ def master_detail(request, master_id):
         'review_form': review_form,
     }
     return render(request, 'master_detail.html', context)
+
+def your_view(request):
+    min_date = timezone.now().strftime('%Y-%m-%dT%H:%M')
+    context = {
+        'min_date': min_date,
+    }
+    return render(request, 'your_template.html', context)

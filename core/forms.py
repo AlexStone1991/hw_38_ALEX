@@ -28,10 +28,28 @@ class OrderForm(forms.ModelForm):
         model = Order
         fields = ["master", 'client_name', 'phone', 'appointment_date', 'services', 'comment']
         widgets = {
+            "client_name": forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ваше имя'
+            }),
+            "phone": forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '+7 (999) 999-99-99'
+            }),
+
+            "comment": forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Комментарий к заказу'
+            }),
+            'services': forms.CheckboxSelectMultiple(
+                attrs={'class': 'form-control'}
+            ),
+
             'appointment_date': forms.DateTimeInput(attrs={
                 'type': 'datetime-local',
                 'class': 'form-control'
             }),
+            
             "master": forms.Select(attrs={
                 'class': 'form-control',
                 'id': 'id_master' 
