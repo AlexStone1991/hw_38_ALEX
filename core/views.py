@@ -85,24 +85,6 @@ def services_list(request):
     }
     return render(request, "services.html", context=context)
 
-def create_order(request, service_id):
-    service = get_object_or_404(Service, id=service_id)
-    
-    if request.method == "POST":
-        form = OrderForm(request.POST, service=service)
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.save()
-            order.services.add(service)
-            return redirect("thanks")
-    else:
-        form = OrderForm(initial={'service': service}, service=service)
-    
-    return render(request, "create_order.html", 
-        {"form": form,
-        "service": service
-        })
-
 def create_review(request):
     if request.method == "POST":
         form = ReviewForm(request.POST, request.FILES)
