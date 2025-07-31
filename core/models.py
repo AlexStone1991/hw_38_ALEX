@@ -63,13 +63,23 @@ class Review(models.Model):
         (4, '4 - Хорошо'),
         (5, '5 - Отлично'),
     )
+
+    STATUS_CHOICES = [
+        ("new", "Новый"),
+        ("ai_moderating", "На модерации"),
+        ("ai_approved", "Одобрен"),
+        ("ai_rejected", "Отклонен"),
+        ("published", "Опубликован"),
+        ("archived", "В архиве"),
+    ]
     text = models.TextField (verbose_name="Текст отзыва")
     client_name = models.CharField (max_length=100, blank=True, verbose_name="Имя клиента")
-    master = models.ForeignKey (Master, on_delete=models.CASCADE, verbose_name="Мастер")
+    master = models.ForeignKey (Master, on_delete=models.SET_NULL, verbose_name="Мастер", null=True)
     photo = models.ImageField (upload_to="reviews/", blank=True, null=True, verbose_name="Фотография")
     created_at = models.DateTimeField (auto_now_add=True, verbose_name="Дата создания")
     rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES, verbose_name="Оценка")
     is_published = models.BooleanField (default=True, verbose_name="Опубликован")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="new", verbose_name="Статус")
     
     def __str__(self):
         return f"Отзыв {self.id} - {self.client_name}"

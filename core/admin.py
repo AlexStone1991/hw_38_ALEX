@@ -160,10 +160,19 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ['client_name', 'master', 'rating_stars', "created_at",'is_published']
-    list_filter = ['rating', 'is_published', 'master']
-    search_fields = ['client_name', 'text']
-    list_editable = ("is_published",)
+    list_display = ['client_name', 'master', 'rating_stars', "status", "created_at",'is_published']
+    list_filter = ['rating', 'is_published', 'master', "status"]
+    search_fields = ['client_name', 'text', "comment"]
+    list_editable = ("is_published", "status")
+    list_editable = ["status"]
+    list_per_page = 10
+    actions = ["check_published"]
+
+    @admin.action(description="Опубликовать отзыв")
+    def check_published(self, request, queryset):
+        queryset.update(status="published")
+
+
     
     @admin.display(description='Рейтинг')
     def rating_stars(self, obj):
