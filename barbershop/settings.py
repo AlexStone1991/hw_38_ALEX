@@ -25,9 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
-LOGIN ="Логин"
-Emai="admin@exemple.com"
-password="Ваш пароль"
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -141,3 +139,20 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 INTERNAL_IPS = ['127.0.0.1']
+
+MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
+
+MISTRAL_MODERATIONS_GRADES = {
+    "hate_and_discrimination": 0.1,  # ненависть и дискриминация
+    "sexual": 0.1,  # сексуальный
+    "violence_and_threats": 0.1,  # насилие и угрозы
+    "dangerous_and_criminal_content": 0.1,  # опасный и криминальный контент
+    "selfharm": 0.1,  # самоповреждение
+    "health": 0.1,  # здоровье
+    "financial": 0.1,  # финансовый
+    "law": 0.1,  # закон
+    "pii": 0.1,  # личная информация
+}
+
+TELEGRAM_BOT_API_KEY = os.getenv("TELEGRAM_BOT_API_KEY")
+TELEGRAM_USER_ID = os.getenv("TELEGRAM_USER_ID")

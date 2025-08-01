@@ -76,7 +76,7 @@ def order_detail(request, order_id):
 def services_list(request):
     services = Service.objects.all()
     masters = Master.objects.all()
-    min_date = timezone.now().strftime('%Y-%m-%dT%H:%M')  # Убедитесь, что формат правильный
+    min_date = timezone.now().strftime('%Y-%m-%dT%H:%M') 
     context = {
         "services": services,
         "masters": masters,
@@ -90,6 +90,7 @@ def create_review(request):
         form = ReviewForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, "Ваш отзыв отправлен на модерацию!")
             return redirect("thanks")
     else:
         form = ReviewForm()
@@ -101,6 +102,7 @@ def create_order(request):
         form = OrderForm(request.POST)
         if form.is_valid():
             order = form.save()
+            messages.success(request, "Заявка успешко отправлена!")
             return redirect("thanks")
     else:
         form = OrderForm()
