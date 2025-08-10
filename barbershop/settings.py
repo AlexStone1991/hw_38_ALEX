@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+from django.urls import reverse_lazy
 from pathlib import Path
 from dotenv import load_dotenv
 import os
@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "django_extensions",
     'debug_toolbar',
-    "core"
+    "core",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -156,3 +157,6 @@ MISTRAL_MODERATIONS_GRADES = {
 
 TELEGRAM_BOT_API_KEY = os.getenv("TELEGRAM_BOT_API_KEY")
 TELEGRAM_USER_ID = os.getenv("TELEGRAM_USER_ID")
+
+LOGIN_URL = '/users/login/'
+LOGIN_REDIRECT_URL = '/'
