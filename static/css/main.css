@@ -5,17 +5,14 @@
     --orange: #FF9800;
     --brown: #8D6E63;
 }
-
 body {
     font-family: 'Comic Sans MS', cursive, sans-serif;
     background-color: #FFF3E0;
 }
-
 .navbar {
     background-color: var(--yellow) !important;
     border-bottom: 3px solid var(--blue);
 }
-
 .nav-block {
     background-color: var(--blue);
     color: white !important;
@@ -23,51 +20,41 @@ body {
     border-radius: 5px;
     transition: all 0.3s;
 }
-
 .nav-block:hover {
     background-color: var(--orange);
     transform: scale(1.05);
 }
-
 .card {
     border: 2px solid var(--blue);
     border-radius: 10px;
     box-shadow: 3px 3px 0 var(--brown);
 }
-
 .badge.bg-info {
     background-color: var(--blue) !important;
 }
-
 .btn-primary {
     background-color: var(--blue);
     border-color: var(--blue);
 }
-
 .btn-primary:hover {
     background-color: var(--orange);
     border-color: var(--orange);
 }
-
 h1, h2, h3, h4 {
     color: var(--blue);
     text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
 }
-
 /* Стили для статусов заказов */
 .badge.new {
     background-color: var(--yellow) !important;
     color: black !important;
 }
-
 .badge.confirmed {
     background-color: var(--blue) !important;
 }
-
 .badge.completed {
     background-color: #4CAF50 !important;
 }
-
 .badge.canceled {
     background-color: var(--red) !important;
 }
@@ -78,7 +65,6 @@ h1, h2, h3, h4 {
     gap: 20px;
     justify-content: center;
 }
-
 .flex-card {
     background: #FFD90F; /* Желтый как в Симпсонах */
     border: 3px solid #1D6FC4; /* Синий как Duff Beer */
@@ -90,12 +76,10 @@ h1, h2, h3, h4 {
     position: relative;
     overflow: hidden;
 }
-
 .flex-card:hover {
     transform: translateY(-5px);
     box-shadow: 8px 8px 0 rgba(0,0,0,0.15);
 }
-
 .flex-card h2 {
     color: #1D6FC4;
     font-size: 1.5rem;
@@ -103,58 +87,48 @@ h1, h2, h3, h4 {
     border-bottom: 2px dashed #1D6FC4;
     padding-bottom: 10px;
 }
-
 .flex-card p {
     margin: 8px 0;
     color: #333;
 }
-
 .services {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     margin: 10px 0;
 }
-
 .badge {
     font-size: 0.85rem;
     padding: 5px 10px;
     border-radius: 50px;
 }
-
 /* Цвета статусов */
 .bg-new {
     background-color: #FF9800 !important; /* Оранжевый для новых */
     color: white;
 }
-
 .bg-confirmed {
     background-color: #2196F3 !important; /* Синий для подтвержденных */
     color: white;
 }
-
 .bg-completed {
     background-color: #4CAF50 !important; /* Зеленый для завершенных */
     color: white;
 }
-
 .bg-canceled {
     background-color: #F44336 !important; /* Красный для отмененных */
     color: white;
 }
-
 /* Кнопка подробнее */
 .btn-outline-primary {
     border-color: #1D6FC4;
     color: #1D6FC4;
     transition: all 0.3s;
 }
-
 .btn-outline-primary:hover {
     background: #1D6FC4;
     color: white;
 }
-
 /* Декоративные элементы в стиле Симпсонов */
 .flex-card::before {
     content: "";
@@ -167,27 +141,22 @@ h1, h2, h3, h4 {
     background-size: contain;
     opacity: 0.1;
 }
-
 .bg-new::before { content: "🆕 "; }
 .bg-confirmed::before { content: "✅ "; }
 .bg-completed::before { content: "✔️ "; }
 .bg-canceled::before { content: "❌ "; }
-
 .footer {
     background-color: #FFD90F !important;
     border-top: 3px solid #1D6FC4 !important;
 }
-
 .footer h5 {
     color: #1D6FC4;
     font-weight: bold;
 }
-
 .social-links a {
     color: #1D6FC4;
     transition: all 0.3s;
 }
-
 .social-links a:hover {
     color: #FF9800;
     transform: scale(1.2);
@@ -195,11 +164,9 @@ h1, h2, h3, h4 {
 html {
     scroll-behavior: smooth;
 }
-
 section {
     scroll-margin-top: 80px; 
 }
-
 .btn-load-more {
     background-color: var(--yellow);
     border: 2px solid var(--blue);
@@ -209,7 +176,6 @@ section {
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
-
 /* Кастомные стили только на Bootstrap */
     .form-control, .form-select {
         border-radius: 0.5rem;
@@ -229,7 +195,6 @@ section {
     .card {
         border-radius: 1rem;
     }
-
 /* Стили для карточек услуг */
 .card {
     transition: transform 0.3s;
@@ -238,7 +203,6 @@ section {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
-
 /* Стили для модального окна */
 .modal-content {
     border-radius: 15px;
@@ -252,13 +216,11 @@ section {
     border-radius: 0.5rem;
     transition: all 0.3s;
 }
-
 .btn-simpsons:hover {
     background-color: #1D6FC4 !important;
     color: #FFD90F !important;
     transform: translateY(-2px);
 }
-
 .btn-simpsons-outline {
     background-color: white !important;
     border: 2px solid #1D6FC4 !important;
@@ -267,19 +229,16 @@ section {
     border-radius: 0.5rem;
     transition: all 0.3s;
 }
-
 .btn-simpsons-outline:hover {
     background-color: #1D6FC4 !important;
     color: white !important;
 }
-
 /* Дополнительные стили для карточек */
 .simpsons-card {
     border: 2px solid #1D6FC4 !important;
     border-radius: 1rem !important;
     transition: all 0.3s;
 }
-
 .simpsons-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 15px rgba(29, 111, 196, 0.2);

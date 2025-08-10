@@ -1,10 +1,10 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid justify-content-center">
+    <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'landing' %}">
             <img src="{% static 'images/moes-logo-small.jpg' %}" alt="Moe's Tavern" height="40">
         </a>
-        <div class="d-flex">
+        <div class="d-flex flex-grow-1 justify-content-center">
             <a href="{% url 'landing' %}" class="nav-block">
                 <div class="nav-block-content"><i class="bi bi-house-door"></i> Главная</div>
             </a>
@@ -29,8 +29,7 @@
                 </a>
             {% endif %}
         </div>
-    </div>
-    <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end">
             {% if user.is_authenticated %}
                 <span class="nav-block">
                     <div class="nav-block-content"><i class="bi bi-person"></i> {{ user.username }}</div>
@@ -50,4 +49,5 @@
                 </a>
             {% endif %}
         </div>
+    </div>
 </nav>
