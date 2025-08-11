@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django import forms
+from django.contrib.auth.models import User
 
-# get_user_model - получает модель пользователя автоматически, и нам не страшно если мы поменяем модель пользователя в будущем
 from django.contrib.auth import get_user_model
 
 user_model = get_user_model()
@@ -14,7 +14,6 @@ class CustomRegisterForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Циклом определяем всем полям form-control
         for field_name, field in self.fields.items():
             field.widget.attrs.update({"class": "form-control"})
 

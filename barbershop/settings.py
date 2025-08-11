@@ -149,3 +149,4 @@ TELEGRAM_USER_ID = os.getenv("TELEGRAM_USER_ID")
 
 LOGIN_URL = reverse_lazy("login")
 LOGIN_REDIRECT_URL = reverse_lazy("landing")
+LOGOUT_REDIRECT_URL = reverse_lazy("landing")
