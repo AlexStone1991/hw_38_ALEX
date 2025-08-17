@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from .forms import CustomRegisterForm, CustomLoginForm
+from .forms import UserRegistrationForm, UserLoginForm
 from django.views.generic.edit import CreateView
 from django.contrib.auth.views import LogoutView, LoginView
 from django.contrib import messages
@@ -7,8 +7,8 @@ from django.contrib.auth import login
 from django.urls import reverse_lazy
 
 
-class CustomRegisterView(CreateView):
-    form_class = CustomRegisterForm
+class UserRegistrationView(CreateView):
+    form_class = UserRegistrationForm
     template_name = "users_login_registr.html"
     success_url = reverse_lazy("landing")
     success_message = "Вы успешно зарегистрировались! Добро пожаловать!"
@@ -32,8 +32,8 @@ class CustomRegisterView(CreateView):
         return context
 
 
-class CustomLoginView(LoginView):
-    form_class = CustomLoginForm
+class UserLoginView(LoginView):
+    form_class = UserLoginForm
     template_name = "users_login_registr.html"
     success_url = reverse_lazy("services-list")
     success_message = "Вы успешно вошли в систему!"
@@ -54,5 +54,5 @@ class CustomLoginView(LoginView):
         return context
 
 
-class CustomLogoutView(LogoutView):
+class UserLogoutView(LogoutView):
     next_page = "/"

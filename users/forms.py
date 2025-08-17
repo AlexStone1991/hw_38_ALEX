@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 user_model = get_user_model()
 
 
-class CustomRegisterForm(UserCreationForm):
+class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = user_model
         fields = ("username", "email", "password1", "password2")
@@ -24,7 +24,7 @@ class CustomRegisterForm(UserCreationForm):
         return email
 
 
-class CustomLoginForm(AuthenticationForm):
+class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
