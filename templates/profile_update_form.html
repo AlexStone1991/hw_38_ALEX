@@ -5,7 +5,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="text-center">{{ operation_type }}</h3>
+                    <h3 class="text-center">Редактирование профиля</h3>
                 </div>
                 <div class="card-body">
                     <form method="post" enctype="multipart/form-data">
@@ -22,11 +22,7 @@
                                 {{ field }}
                             </div>
                         {% endfor %}
-                        
-                        <button type="submit" class="btn btn-primary w-100">{{ operation_type  }}</button>
-                        {% if is_auth_form %}
-                        <a href="{% url 'password_reset' %}" class="btn btn-link w-100">Забыли пароль?</a>
-                        {% endif %}
+                        <button type="submit" class="btn btn-primary w-100">Сохранить изменения</button>
                     </form>
                 </div>
             </div>

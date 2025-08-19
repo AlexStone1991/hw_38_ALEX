@@ -17,7 +17,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG_MODE", "True") == "True"
 
 ALLOWED_HOSTS = []
 
@@ -150,3 +150,8 @@ TELEGRAM_USER_ID = os.getenv("TELEGRAM_USER_ID")
 LOGIN_URL = reverse_lazy("login")
 LOGIN_REDIRECT_URL = reverse_lazy("landing")
 LOGOUT_REDIRECT_URL = reverse_lazy("landing")
+
+# Новая модель пользователя users.models.CustomUser
+AUTH_USER_MODEL = "users.CustomUser"
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

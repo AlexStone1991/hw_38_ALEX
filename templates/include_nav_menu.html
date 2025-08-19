@@ -32,9 +32,9 @@
     </div>
     <div class="d-flex justify-content-end">
             {% if user.is_authenticated %}
-                <span class="nav-block">
-                    <div class="nav-block-content"><i class="bi bi-person"></i> {{ user.username }}</div>
-                </span>
+                <a href="{% url 'profile_detail' %}" class="nav-block">
+                <div class="nav-block-content"><i class="bi bi-person"></i> {{ user.username }}</div>
+            </a>
                 <form action="{% url 'logout' %}" method="post" class="d-inline">
                     {% csrf_token %}
                     <button type="submit" class="nav-block">
