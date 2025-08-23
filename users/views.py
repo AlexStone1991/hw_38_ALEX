@@ -104,7 +104,7 @@ class UserRegistrationView(CreateView):
 class UserLoginView(LoginView):
     form_class = UserLoginForm
     template_name = "users_login_registr.html"
-    success_url = reverse_lazy("services-list")
+    success_url = reverse_lazy("landing")
     success_message = "Вы успешно вошли в систему!"
 
     def form_valid(self, form):
